@@ -1,25 +1,33 @@
 spring:
   application:
-    name: company-service
+    name: company-service # Nombre del servicio para Eureka
   profiles:
-    default: default
+    default: default # Podria ser prod, test, etc
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://localhost:8888 # Importa la configuración desde el servidor de configuración
   datasource:
     url: ${spring.datasource.url}
-    driver-class-name: ${spring.datasource.driver-class-name}
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${spring.datasource.username}
     password: ${spring.datasource.password}
     hikari:
       connection-timeout: ${spring.datasource.hikari.connection-timeout}
-      maximum-pool-size:  ${spring.datasource.hikari.maximum-pool-size}
+      maximum-pool-size: ${spring.datasource.hikari.maximum-pool-size} # Número máximo de conexiones en el pool
   jpa:
     hibernate:
-      ddl-auto: ${spring.jpa.hibernate.ddl-auto}
-    show-sql:  ${spring.jpa.show-sql}
+      ddl-auto: ${spring.jpa.hibernate.ddl-auto} # Mantiene el esquema de la base de datos actualizado
+    show-sql: ${spring.jpa.show-sql} # Muestra las consultas SQL generadas por Hibernate
 server:
-  port: ${PORT:8087}
-
+  port: ${PORT:8087} # Puerto donde se ejecutará el servicio
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG # Habilita el nivel de depuración para las consultas SQL
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE # Rastrea los valores enlazados en las consultas SQL
 eureka:
   instance:
     instance-id: ${spring.application.name}:${random.value}
