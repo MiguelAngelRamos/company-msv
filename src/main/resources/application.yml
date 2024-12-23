@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: company-service
+  profiles:
+    default: default
+  config:
+    import: optional:configserver:http://localhost:8888
+  datasource:
+    url: ${spring.datasource.url}
+    driver-class-name: ${spring.datasource.driver-class-name}
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    hikari:
+      connection-timeout: ${spring.datasource.hikari.connection-timeout}
+      maximum-pool-size:  ${spring.datasource.hikari.maximum-pool-size}
+  jpa:
+    hibernate:
+      ddl-auto: ${spring.jpa.hibernate.ddl-auto}
+    show-sql:  ${spring.jpa.show-sql}
+server:
+  port: ${PORT:8087}
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.value}
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
