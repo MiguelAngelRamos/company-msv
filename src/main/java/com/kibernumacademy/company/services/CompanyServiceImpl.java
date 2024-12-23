@@ -40,14 +40,23 @@ public class CompanyServiceImpl implements CompanyService{
 
   @Override
   public Company update(Company company, String name) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'update'");
+    // Buscar si existe la compañia
+    // Company companyToUpdate = this.companyRepository.findByName(name).orElseThrow( () -> new NoSuchElementException("Company noit found"));
+    Company companyToUpdate = this.readByName(name);
+
+    // Actualizo la compañia
+    companyToUpdate.setLogo(company.getLogo());
+    companyToUpdate.setFoundationDate(company.getFoundationDate());
+    companyToUpdate.setFounder(company.getFounder());
+    // Guardar Cambios
+    return this.companyRepository.save(companyToUpdate);
+
   }
 
   @Override
   public void delete(String name) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    Company companyToDelete = this.readByName(name);
+    this.companyRepository.delete(companyToDelete);
   }
   
 }
