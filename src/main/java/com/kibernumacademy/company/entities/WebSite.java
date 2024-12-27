@@ -1,5 +1,7 @@
 package com.kibernumacademy.company.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -34,5 +36,6 @@ public class WebSite {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name="id_company", nullable= false)
+  @JsonBackReference
   private Company company;
 }
